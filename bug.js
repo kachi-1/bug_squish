@@ -92,16 +92,19 @@ function draw() {
         
 }
 
+//Starts a new game
 function startGame() {
     game.bugsScore = 0;
     game.elapsedTime = 0;
     game.state = GameState.Playing;
 }
 
+//Resets the game
 function restartGame() {
     location.reload();
 }
 
+//Squishes bugs when clicked
 function mousePressed() {
     for (let i=0; i<bugsNum; i++) {
         let contains = bugs[i].contains(mouseX, mouseY);
@@ -113,24 +116,12 @@ function mousePressed() {
                     bugs[i].speed += 0.1;
                 }
             }
-            console.log('bug'+ mouseX + ' ' + mouseY);
-            bugs[i].pos();
         }
        
     }
 }
-// function keyPressed() {
-//     for (let i=0; i<bugsNum; i++) {
-//         bugs[i].keyPressed(RIGHT_ARROW, LEFT_ARROW);
-//     }
-// }
 
-// function keyReleased() {
-//     for (let i=0; i<bugsNum; i++) {
-//         bugs[i].keyReleased(RIGHT_ARROW, LEFT_ARROW);
-//     }
-// }
-
+//Bugs
 class bugAnimation {
     constructor(spriteSheet, sw, sh, dx, dy, animationLength, speed, framerate) {
         this.spriteSheet = spriteSheet;
@@ -148,7 +139,6 @@ class bugAnimation {
         this.framerate = framerate*speed;
         this.squished = 0;
         this.vertical = random(angles);
-        // this.vertical = 0;
     }
 
     draw() {
@@ -159,11 +149,6 @@ class bugAnimation {
             rotate(90);
         }
         scale(this.xDirection,1);
-        push();
-        //noStroke();
-        fill(210);
-        rect(-38,-36,20,26);
-        pop();
         if (!this.squished)
             image(this.spriteSheet,0,0,this.sw,this.sh,this.u*this.sw,this.v*this.sh,this.sw,this.sh);
         else image(this.spriteSheet,0,0,this.sw,this.sh,5*this.sw,this.v*this.sh,this.sw,this.sh);
@@ -224,27 +209,7 @@ class bugAnimation {
         this.xDirection = 1;
     }
 
-    keyPressed(right, left) {
-        if (keyCode == right) {
-            this.moving = 1;
-            this.xDirection = 1;
-            this.currentFrame = 1;
-        }else if (keyCode == left) {
-            this.moving = -1;
-            this.xDirection = -1;
-            this.currentFrame = 1;
-        }
-    }
-
-    keyReleased(right, left) {
-        if (keyCode === right|| keyCode === left) {
-            this.moving = 0;
-        }
-    }
-
-    
     contains(x, y) {
-        //rect(-38,-36,20,26);
         let insideX, insideY  = 0;
         if (!this.vertical)
         {
@@ -271,9 +236,5 @@ class bugAnimation {
     squish() {
         this.squished = 1;
         this.moving = 0;
-    }
-
-    pos() {
-        console.log(this.dx + ' ' + this.dy)
     }
 }
